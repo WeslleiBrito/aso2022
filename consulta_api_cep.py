@@ -9,13 +9,6 @@ class BuscaEndereco:
         else:
             raise ValueError('CEP não localizado.')
 
-    def cep_e_valido(self, cep):
-
-        if len(self._limpa_cep(cep)) == 8:
-            return [True, self._limpa_cep(cep)]
-        else:
-            return False
-
     def __str__(self):
         return f'CEP: {self.cep}, Rua: {self.logradouro}, Bairro: {self.bairro}, Cidade: {self.localidade}, ' \
                f'Estado: {self.uf}'
@@ -24,7 +17,7 @@ class BuscaEndereco:
     def _limpa_cep(cep):
         cep_limpo = []
         for digito in cep:
-            if digito in '0123456789':
+            if digito.isdigit():
                 cep_limpo.append(digito)
         cep_limpo = ''.join(cep_limpo)
         return cep_limpo

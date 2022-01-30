@@ -41,12 +41,12 @@ class Pacientes:
 
     @staticmethod
     def limpa_cpf(cpf):
-        cpf_limpo = [digito for digito in cpf if digito in '0123456789']
+        cpf_limpo = [digito for digito in cpf if digito.isdigit()]
         return ''.join(cpf_limpo)
 
     @staticmethod
     def limpa_rg(rg):
-        rg_limpo = [digito for digito in rg if digito in '0123456789']
+        rg_limpo = [digito for digito in rg if digito.isdigit()]
         return '.'.join(rg_limpo)
 
     def valida_cpf(self, cpf):
