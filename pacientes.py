@@ -3,10 +3,10 @@ from validate_docbr import CPF
 
 class Pacientes:
 
-    def __init__(self, nome, rg, cpf, cep=False):
+    def __init__(self, nome, rg, cpf, cep=''):
         self._nome = nome
         self._RG = self.limpa_rg(rg)
-        if cep:
+        if cep != '':
             consulta_cep = BuscaEndereco(cep)
             self._cep = consulta_cep.cep
             self._logradouro = consulta_cep.logradouro
@@ -55,6 +55,6 @@ class Pacientes:
 
 
 if __name__ == '__main__':
-    paciente = Pacientes('Wesllei', '13.638.538-99', '053.539.705-43')
+    paciente = Pacientes('Wesllei', '13.638.538-99', '053.539.705-43', '44092492')
 
     print(paciente)
