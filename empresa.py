@@ -1,5 +1,6 @@
 from validate_docbr import CNPJ
 
+
 class Empresa:
 
     def __init__(self, cnpj, nome):
