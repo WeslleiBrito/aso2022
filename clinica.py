@@ -1,6 +1,7 @@
-from validatorPCTE import validatorPCTE as vt
 from validate_docbr import CNPJ
 from consulta_api_cep import BuscaEndereco
+import re
+
 
 class Clinica:
 
@@ -19,8 +20,33 @@ class Clinica:
             self._localidade = busca.localidade
             self._uf = busca.uf
 
+        if self.valida_telefone(celular)[0]:
+            self._celular = self.valida_telefone(celular)[1]
+        else:
+            raise ValueError('Número inválido')
+
     def __str__(self):
-        return self.cep
+        return f'CEP: {self.cep}, Celular: {self.celular}'
+
+    def valida_telefone(self, numero):
+        numero = self.limpa_numero(numero)
+        padrao = "([1-9]{2})?([0-9]{2})([0-9]{4,5})([0-9]{4})"
+        verifica = re.search(padrao, numero)
+
+        if verifica:
+            return [True, self.mask_celular(numero)]
+        else:
+            return [False]
+
+    def mask_celular(self, numero):
+        if len(numero) == 11:
+            return f'({numero[:2]}){numero[2:7]}-{numero[7:]}'
+        else:
+            return f'({numero[:2]}){numero[2:6]}-{numero[6:]}'
+
+    def limpa_numero(self, numero):
+        numero_limpo = [digito for digito in numero if digito.isdigit()]
+        return ''.join(numero_limpo)
 
     @property
     def nome(self):
@@ -50,11 +76,11 @@ class Clinica:
     def uf(self):
         return self._uf
 
+    @property
+    def celular(self):
+        return self._celular
+
 
 if __name__ == '__main__':
-    clinica = Clinica('Teste', '29369431000101', cep='44092440')
+    clinica = Clinica('Teste', '29369431000101', cep='44092440', celular='(75)982302834')
     print(clinica)
-
-
-
-

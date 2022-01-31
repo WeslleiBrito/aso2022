@@ -1,6 +1,7 @@
 from consulta_api_cep import BuscaEndereco
 from validate_docbr import CPF
 
+
 class Pacientes:
 
     def __init__(self, nome, rg, cpf, cep=''):
