@@ -1,7 +1,6 @@
 from validate_docbr import CNPJ
 from consulta_api_cep import BuscaEndereco
 from valida_telefone import ValidaTelefone
-import re
 
 
 class Clinica:
@@ -29,8 +28,18 @@ class Clinica:
         else:
             raise ValueError('Número inválido')
 
+        if telefone:
+
+            objeto_valida = ValidaTelefone(telefone)
+            verifica = objeto_valida.valida_telefone()
+
+            if verifica[0]:
+                self._telefone = verifica[1]
+            else:
+                raise ValueError('Número inválido')
+
     def __str__(self):
-        return f'CEP: {self.cep}, Celular: {self.celular}'
+        return f'CEP: {self.cep}, Celular: {self.celular}, Telefone: {self.telefone}'
 
     @property
     def nome(self):
@@ -64,7 +73,11 @@ class Clinica:
     def celular(self):
         return self._celular
 
+    @property
+    def telefone(self):
+        return self._telefone
+
 
 if __name__ == '__main__':
-    clinica = Clinica('Teste', '29369431000101', '(75)982302834', '44092440', )
+    clinica = Clinica('Teste', '29369431000101', '(75)982302834', '44092440', '7534821982')
     print(clinica)
