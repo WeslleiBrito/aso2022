@@ -1,6 +1,7 @@
 from validate_docbr import CNPJ
 from consulta_api_cep import BuscaEndereco
 from valida_telefone import ValidaTelefone
+from valida_email import ValidaEmail
 
 
 class Clinica:
@@ -38,8 +39,15 @@ class Clinica:
             else:
                 raise ValueError('Número inválido')
 
+        if email:
+            objeto_email = ValidaEmail(email)
+            if objeto_email.email:
+                self._email = email
+            else:
+                raise ValueError('Email inválido')
+
     def __str__(self):
-        return f'CEP: {self.cep}, Celular: {self.celular}, Telefone: {self.telefone}'
+        return f'CEP: {self.cep}, Celular: {self.celular}, Telefone: {self.telefone}, Email: {self.email}'
 
     @property
     def nome(self):
@@ -77,7 +85,11 @@ class Clinica:
     def telefone(self):
         return self._telefone
 
+    @property
+    def email(self):
+        return self._email
+
 
 if __name__ == '__main__':
-    clinica = Clinica('Teste', '29369431000101', '(75)982302834', '44092440', '7534821982')
+    clinica = Clinica('Teste', '29369431000101', '(75)982302834', '44092440', '7534821982', 'wesllei.wbs@gmail.com')
     print(clinica)
