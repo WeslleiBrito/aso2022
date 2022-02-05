@@ -4,7 +4,7 @@ from validate_docbr import CPF
 
 class Pacientes:
 
-    def __init__(self, nome, rg, cpf, cep=''):
+    def __init__(self, nome, rg, cpf, cep='', numero=None):
         self._nome = nome
         self._RG = self.limpa_rg(rg)
         if cep != '':
@@ -14,6 +14,7 @@ class Pacientes:
             self._bairro = consulta_cep.bairro
             self._localidade = consulta_cep.localidade
             self._uf = consulta_cep.uf
+            self._numero = numero
         else:
             self._cep = False
 
@@ -40,6 +41,10 @@ class Pacientes:
     def cpf(self):
         return f'{self._cpf}'
 
+    @property
+    def numero(self):
+        return self._numero
+
     @staticmethod
     def limpa_cpf(cpf):
         cpf_limpo = [digito for digito in cpf if digito.isdigit()]
@@ -56,6 +61,6 @@ class Pacientes:
 
 
 if __name__ == '__main__':
-    paciente = Pacientes('Wesllei', '13.638.538-99', '053.539.705-43', '44092492')
+    paciente = Pacientes('Wesllei', '13.638.538-99', '053.539.705-43', '44092492', '15')
 
     print(paciente)
