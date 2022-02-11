@@ -4,9 +4,16 @@ from validate_docbr import CPF
 
 class Pacientes:
 
-    def __init__(self, nome, rg, cpf, cep='', numero=None):
+    def __init__(self, nome, rg, cpf, nascimento, peso, altura, sexo, funcao, setor, cep='', numero_casa=None):
         self._nome = nome
         self._RG = self.limpa_rg(rg)
+        self._nascimento = nascimento
+        self._peso = peso
+        self._altura = altura
+        self._sexo = sexo
+        self._funcao = funcao
+        self._setor = setor
+
         if cep != '':
             consulta_cep = BuscaEndereco(cep)
             self._cep = consulta_cep.cep
@@ -14,7 +21,7 @@ class Pacientes:
             self._bairro = consulta_cep.bairro
             self._localidade = consulta_cep.localidade
             self._uf = consulta_cep.uf
-            self._numero = numero
+            self._numero = numero_casa
         else:
             self._cep = False
 
@@ -43,7 +50,7 @@ class Pacientes:
 
     @property
     def numero(self):
-        return self._numero
+        return self._numero_casa
 
     @staticmethod
     def limpa_cpf(cpf):
