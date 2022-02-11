@@ -1,4 +1,4 @@
-from consulta_api_cep import BuscaEndereco
+from validadores.consulta_api_cep import BuscaEndereco
 from validate_docbr import CPF
 
 

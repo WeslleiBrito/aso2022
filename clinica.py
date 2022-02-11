@@ -1,7 +1,7 @@
 from validate_docbr import CNPJ
-from consulta_api_cep import BuscaEndereco
-from valida_telefone import ValidaTelefone
-from valida_email import ValidaEmail
+from validadores.consulta_api_cep import BuscaEndereco
+from validadores.valida_telefone import ValidaTelefone
+from validadores.valida_email import ValidaEmail
 
 
 class Clinica:
