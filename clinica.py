@@ -1,5 +1,5 @@
 from validate_docbr import CNPJ
-from validadores.consulta_api_cep import BuscaEndereco
+from api_externas.consulta_api_cep import BuscaEndereco
 from validadores.valida_telefone import ValidaTelefone
 from validadores.valida_email import ValidaEmail
 
