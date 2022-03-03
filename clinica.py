@@ -1,25 +1,28 @@
 from validate_docbr import CNPJ
-from api_externas.consulta_api_cep import BuscaEndereco
 from validadores.valida_telefone import ValidaTelefone
 from validadores.valida_email import ValidaEmail
+from api_externas.captura_dados_empresa_por_cnpj import ConsultaCNPJ
 
 
-class Clinica:
+class Clinica(object):
 
-    def __init__(self, nome, cnpj, celular, cep=None, telefone=None, email=None):
-        self._nome = nome
+    def __init__(self, cnpj, celular, telefone=None, email=None):
+
         if CNPJ().validate(str(cnpj)):
-            self._cnpj = CNPJ.mask(cnpj)
+
+            informacoes = ['nome', 'fantasia', 'cnpj', 'cep', 'uf', 'municipio', 'bairro', 'logradouro', 'numero']
+            consultor = ConsultaCNPJ(cnpj, informacoes).recebe_dados_cadastro()
+            self._nome = consultor[0]
+            self._fantasia = consultor[1]
+            self._cnpj = consultor[2]
+            self._cep = consultor[3]
+            self._uf = consultor[4]
+            self._localidade = consultor[5]
+            self._bairro = consultor[6]
+            self._logradouro = consultor[7]
+            self._numero = consultor[8]
         else:
             raise ValueError('CNPJ inválido')
-
-        if cep and BuscaEndereco(cep):
-            busca = BuscaEndereco(cep)
-            self._cep = busca.cep
-            self._logradouro = busca.logradouro
-            self._bairro = busca.bairro
-            self._localidade = busca.localidade
-            self._uf = busca.uf
 
         objeto_valida = ValidaTelefone(celular)
         verifica = objeto_valida.valida_telefone()
@@ -38,6 +41,8 @@ class Clinica:
                 self._telefone = verifica[1]
             else:
                 raise ValueError('Número inválido')
+        else:
+            self._telefone = telefone
 
         if email:
             objeto_email = ValidaEmail(email)
@@ -45,9 +50,12 @@ class Clinica:
                 self._email = email
             else:
                 raise ValueError('Email inválido')
+        else:
+            self._email = email
 
     def __str__(self):
-        return f'CEP: {self.cep}, Celular: {self.celular}, Telefone: {self.telefone}, Email: {self.email}'
+
+        return f'Nome: {self.nome}, CEP: {self.cep}, Celular: {self.celular}, Telefone: {self.telefone}, Email: {self.email}'
 
     @property
     def nome(self):
@@ -91,5 +99,5 @@ class Clinica:
 
 
 if __name__ == '__main__':
-    clinica = Clinica('Teste', '29369431000101', '(75)982302834', '44092440', '7534821982', 'wesllei.wbs@gmail.com')
+    clinica = Clinica('29369431000101', '(75)982302834')
     print(clinica)
