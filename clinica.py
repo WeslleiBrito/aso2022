@@ -6,7 +6,7 @@ from api_externas.captura_dados_empresa_por_cnpj import ConsultaCNPJ
 
 class Clinica(object):
 
-    def __init__(self, cnpj, celular, telefone=None, email=None):
+    def __init__(self, cnpj, celular=None, telefone=None, email=None):
 
         if CNPJ().validate(str(cnpj)):
 
@@ -99,5 +99,5 @@ class Clinica(object):
 
 
 if __name__ == '__main__':
-    clinica = Clinica('29369431000101', '(75)982302834')
+    clinica = Clinica('29369431000101', '75982302834')
     print(clinica)
